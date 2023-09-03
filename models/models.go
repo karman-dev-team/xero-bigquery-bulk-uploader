@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type XeroCompany struct {
 	ID      string
 	Company string
@@ -51,4 +53,19 @@ type XeroInvoice struct {
 
 type InvoiceBody struct {
 	Invoices []XeroInvoice `json:"Invoices"`
+}
+
+type BQInvoice struct {
+	InvoiceID   string    `bigquery:"invoice_id"`
+	ContactID   string    `bigquery:"contact_id"`
+	ContactName string    `bigquery:"contact_name"`
+	InvoiceDate time.Time `bigquery:"invoice_date"`
+	DueDate     time.Time `bigquery:"due_date"`
+	TotalPreTax float32   `bigquery:"total_pre_tax"`
+	TotalTax    float32   `bigquery:"total_tax"`
+	Total       float32   `bigquery:"total"`
+	Company     string    `bigquery:"company"`
+	Status      string    `bigquery:"status"`
+	Reference   string    `bigquery:"reference"`
+	Type        string    `bigquery:"type"`
 }
