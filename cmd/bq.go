@@ -10,8 +10,8 @@ import (
 	"cloud.google.com/go/bigquery"
 )
 
-func uploadInvoices(invoices []models.XeroInvoice, company string) error {
-	bqInvoices, err := convertToBQInvoice(invoices, company)
+func uploadInvoices(invoices []models.XeroInvoice, company string, lookup []models.RevenueLineCSV) error {
+	bqInvoices, err := convertToBQInvoice(invoices, company, lookup)
 	if err != nil {
 		return err
 	}

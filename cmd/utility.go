@@ -16,7 +16,7 @@ func splitIntoBatches(slice []models.BQInvoice, batchSize int) [][]models.BQInvo
 	return batches
 }
 
-func convertToBQInvoice(invoices []models.XeroInvoice, company string) ([]models.BQInvoice, error) {
+func convertToBQInvoice(invoices []models.XeroInvoice, company string, lookup []models.RevenueLineCSV) ([]models.BQInvoice, error) {
 	layout := "2006-01-02T15:04:05"
 	bqInvoices := []models.BQInvoice{}
 	for _, invoice := range invoices {
@@ -41,8 +41,19 @@ func convertToBQInvoice(invoices []models.XeroInvoice, company string) ([]models
 			Status:      invoice.Status,
 			Reference:   invoice.Reference,
 			Type:        invoice.Type,
+			Description: invoice.LineItems[0].Description,
+			RevenueLine: findRevenueLineById(lookup, invoice.LineItems[0].AccountCode),
 		}
 		bqInvoices = append(bqInvoices, bqInvoice)
 	}
 	return bqInvoices, nil
+}
+
+func findRevenueLineById(lookup []models.RevenueLineCSV, accountCode string) string {
+	for i := range lookup {
+		if lookup[i].XeroRevenueCode == accountCode {
+			return lookup[i].HubspotRevenueLine
+		}
+	}
+	return ""
 }

@@ -62,10 +62,17 @@ type BQInvoice struct {
 	InvoiceDate time.Time `bigquery:"invoice_date"`
 	DueDate     time.Time `bigquery:"due_date"`
 	TotalPreTax float32   `bigquery:"total_pre_tax"`
-	TotalTax    float32   `bigquery:"total_tax"`
+	RevenueLine string    `bigquery:"revenue_line"`
+	TotalTax    float32   `bigquery:"tax"`
 	Total       float32   `bigquery:"total"`
 	Company     string    `bigquery:"company"`
 	Status      string    `bigquery:"status"`
 	Reference   string    `bigquery:"reference"`
 	Type        string    `bigquery:"type"`
+	Description string    `bigquery:"description"`
+}
+
+type RevenueLineCSV struct {
+	HubspotRevenueLine string `csv:"hubspot_revenue_value"`
+	XeroRevenueCode    string `csv:"xero_revenue_code"`
 }

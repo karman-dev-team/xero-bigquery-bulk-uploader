@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"time"
 	"xero-bigquery-bulk-uploader/models"
 
 	"golang.org/x/oauth2"
@@ -34,6 +35,9 @@ func getAllInvoices(token *oauth2.Token, tenantID string) ([]models.XeroInvoice,
 			break
 		}
 		page++
+		if page%59 == 0 {
+			time.Sleep(60 * time.Second)
+		}
 	}
 
 	return invoices, nil
