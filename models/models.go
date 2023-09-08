@@ -76,3 +76,8 @@ type RevenueLineCSV struct {
 	HubspotRevenueLine string `csv:"hubspot_revenue_value"`
 	XeroRevenueCode    string `csv:"xero_revenue_code"`
 }
+
+type JobIDCSV struct {
+	JobID       string `csv:"ID"`
+	RevenueLine string `csv:"Account"`
+}
